@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Graph {
 
@@ -13,7 +14,17 @@ public class Graph {
         return new LinkedHashSet<>(edges);
     }
 
-    public Graph addEdge(Edge firstEdge, Edge secondEdge) {
+    public Set<Line> getLines() {
+
+        return this.edges.stream()
+                .map(edge -> edge.getLinkedEdges().stream()
+                        .map(linkedEdge -> new Line(edge, linkedEdge))
+                        .toList())
+                .flatMap(Collection::stream)
+                .collect(Collectors.toSet());
+    }
+
+    public Graph addLine(Edge firstEdge, Edge secondEdge) {
 
         Edge existingFirstEdge = this.edges.stream()
                 .filter(e -> e.equals(firstEdge))

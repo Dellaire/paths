@@ -24,6 +24,11 @@ public class Edge {
         return this.y;
     }
 
+    public Set<Edge> getLinkedEdges() {
+
+        return new HashSet<>(this.linkedEdges.keySet());
+    }
+
     public void linkEdge(Edge newEdge) {
 
         this.linkedEdges.put(newEdge, sqrt(pow(this.x - newEdge.x, 2) + pow(this.y - newEdge.y, 2)));
