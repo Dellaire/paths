@@ -10,6 +10,8 @@ import java.util.List;
 
 public class LineVisualization extends JFrame {
 
+    private final static int WINDOW_SIZE = 1000;
+    private final static int WINDOW_OFFSET = 50;
     private final static int CIRCLE_DIAMETER = 10;
     private final static int CIRCLE_OFFSET = CIRCLE_DIAMETER / 2;
 
@@ -18,8 +20,8 @@ public class LineVisualization extends JFrame {
 
     public LineVisualization() {
 
-        this.setSize(1000, 1000);
-        this.setLocation(50, 50);
+        this.setSize(WINDOW_SIZE, WINDOW_SIZE);
+        this.setLocation(WINDOW_OFFSET, WINDOW_OFFSET);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -43,8 +45,10 @@ public class LineVisualization extends JFrame {
             this.graphics.drawLine(line.getEdge1().getX().intValue(), line.getEdge1().getY().intValue(),
                     line.getEdge2().getX().intValue(), line.getEdge2().getY().intValue());
 
-            this.graphics.fillOval(line.getEdge1().getX().intValue() - CIRCLE_OFFSET, line.getEdge1().getY().intValue() - CIRCLE_OFFSET, CIRCLE_DIAMETER, CIRCLE_DIAMETER);
-            this.graphics.fillOval(line.getEdge2().getX().intValue() - CIRCLE_OFFSET, line.getEdge2().getY().intValue() - CIRCLE_OFFSET, CIRCLE_DIAMETER, CIRCLE_DIAMETER);
+            this.graphics.fillOval(line.getEdge1().getX().intValue() - CIRCLE_OFFSET,
+                    line.getEdge1().getY().intValue() - CIRCLE_OFFSET, CIRCLE_DIAMETER, CIRCLE_DIAMETER);
+            this.graphics.fillOval(line.getEdge2().getX().intValue() - CIRCLE_OFFSET,
+                    line.getEdge2().getY().intValue() - CIRCLE_OFFSET, CIRCLE_DIAMETER, CIRCLE_DIAMETER);
         });
     }
 }

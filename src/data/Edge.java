@@ -34,6 +34,12 @@ public class Edge {
         this.linkedEdges.put(newEdge, sqrt(pow(this.x - newEdge.x, 2) + pow(this.y - newEdge.y, 2)));
     }
 
+    public void linkEdges(Collection<Edge> newEdges) {
+
+        newEdges.forEach(newEdge ->
+                this.linkedEdges.put(newEdge, sqrt(pow(this.x - newEdge.x, 2) + pow(this.y - newEdge.y, 2))));
+    }
+
     public void unlinkEdges(Collection<Edge> edgesToUnlink) {
 
         edgesToUnlink.forEach(edge -> this.linkedEdges.remove(edge));
@@ -63,7 +69,7 @@ public class Edge {
                         }
                 ).toList());
 
-        paths.sort(Comparator.comparing(Path::getLength).reversed());
+        paths.sort(Comparator.comparing(Path::getLength));
 
         return paths.get(0);
     }

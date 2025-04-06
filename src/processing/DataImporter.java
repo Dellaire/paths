@@ -1,4 +1,4 @@
-package data;
+package processing;
 
 import data.Edge;
 
@@ -12,7 +12,7 @@ import static java.lang.Double.parseDouble;
 
 public class DataImporter {
 
-    public static List<Edge[]> readVertices(String filePath) {
+    public static List<Edge[]> readLines(String filePath) {
 
         java.nio.file.Path path = Paths.get(filePath);
         String input = "";
@@ -22,17 +22,17 @@ public class DataImporter {
             throw new RuntimeException(e);
         }
 
-        List<String> vertexStrings = Arrays.asList(input.split("\n"));
-        List<String[]> edgeStrings = vertexStrings.stream()
-                .map(vertexString -> vertexString.split(" "))
+        List<String> lineStrings = Arrays.asList(input.split("\n"));
+        List<String[]> edgeStrings = lineStrings.stream()
+                .map(lineString -> lineString.split(" "))
                 .toList();
-        List<Edge[]> vertices = edgeStrings.stream()
+        List<Edge[]> lines = edgeStrings.stream()
                 .map(edgeString -> new Edge[]{
                         new Edge(parseDouble(edgeString[0]), parseDouble(edgeString[1])),
                         new Edge(parseDouble(edgeString[2]), parseDouble(edgeString[3]))
                 })
                 .toList();
 
-        return vertices;
+        return lines;
     }
 }
