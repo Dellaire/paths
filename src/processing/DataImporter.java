@@ -1,6 +1,7 @@
 package processing;
 
 import data.Edge;
+import data.Line;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,10 +13,10 @@ import static java.lang.Double.parseDouble;
 
 public class DataImporter {
 
-    public static List<Edge[]> readLines(String filePath) {
+    public static List<Line> readLines(String filePath) {
 
         java.nio.file.Path path = Paths.get(filePath);
-        String input = "";
+        String input;
         try {
             input = Files.readString(path);
         } catch (IOException e) {
@@ -26,11 +27,11 @@ public class DataImporter {
         List<String[]> edgeStrings = lineStrings.stream()
                 .map(lineString -> lineString.split(" "))
                 .toList();
-        List<Edge[]> lines = edgeStrings.stream()
-                .map(edgeString -> new Edge[]{
+        List<Line> lines = edgeStrings.stream()
+                .map(edgeString -> new Line(
                         new Edge(parseDouble(edgeString[0]), parseDouble(edgeString[1])),
                         new Edge(parseDouble(edgeString[2]), parseDouble(edgeString[3]))
-                })
+                ))
                 .toList();
 
         return lines;

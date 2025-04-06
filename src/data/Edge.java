@@ -7,9 +7,9 @@ import static java.lang.Math.sqrt;
 
 public class Edge {
 
-    private Double x;
-    private Double y;
-    private Map<Edge, Double> linkedEdges = new HashMap<>();
+    private final Double x;
+    private final Double y;
+    private final Map<Edge, Double> linkedEdges = new HashMap<>();
 
     public Edge(Double x, Double y) {
         this.x = x;
@@ -42,12 +42,12 @@ public class Edge {
 
     public void unlinkEdges(Collection<Edge> edgesToUnlink) {
 
-        edgesToUnlink.forEach(edge -> this.linkedEdges.remove(edge));
+        edgesToUnlink.forEach(this.linkedEdges::remove);
     }
 
-    public Path findLongestPathFromHere(Set<Edge> alreadyVisitedEdges) {
+    public Path findLongestPathFromHere() {
 
-        return this.findLongestPathRecursive(alreadyVisitedEdges).addEdge(this);
+        return this.findLongestPathRecursive(Set.of()).addEdge(this);
     }
 
     public Path findLongestPathRecursive(Set<Edge> alreadyVisitedEdges) {
@@ -86,6 +86,6 @@ public class Edge {
 
     @Override
     public String toString() {
-        return this.x.toString() + "_" + this.y.toString();
+        return this.x.toString() + "," + this.y.toString();
     }
 }

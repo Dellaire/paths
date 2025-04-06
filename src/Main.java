@@ -1,43 +1,25 @@
-import data.*;
-import data.AmbiguousGraph;
+import data.Line;
+import data.Path;
 import processing.DataImporter;
-import ui.LineVisualization;
+import processing.PathCalculator;
+import ui.PathVisualization;
 
-import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        List<Edge[]> vertices = DataImporter.readLines(args[0]);
-        AmbiguousGraph graph = new AmbiguousGraph();
-        vertices.forEach(vertex -> graph.addLine(vertex[0], vertex[1]));
-        graph.linkLinearPaths();
-
-        List<Path> paths = graph.getEdges().stream()
-                .map(edge -> edge.findLongestPathFromHere(Set.of()))
-                .sorted(Comparator.comparing(Path::getLength).reversed())
-                .distinct()
-                .toList();
-
-        Set<Line> lines = graph.getLines();
-
-        LineVisualization visualization = new LineVisualization();
-        visualization.setVisible(true);
-        visualization.setLinesToVisualize(paths.get(0).getLines());
-    }
-
-    private void calculatePaths(String inputFilePath) {
-
-        List<Edge[]> vertices = DataImporter.readLines(inputFilePath);
-        Graph graph = new Graph();
-        vertices.forEach(vertex -> graph.addLine(vertex[0], vertex[1]));
-
-        Path path = graph.getEdges().stream().toList().get(0).findLongestPathFromHere(Set.of());
-        graph.removeEdges(path.getEdges());
+        List<Line> lines = DataImporter.readLines(args[0]);
+        List<Path> paths = PathCalculator.calculatePaths(lines);
 
         System.out.println();
+        paths.forEach(path -> System.out.printf("Path with length %s: %s%n", path.getLength(), path));
+
+        List<Path> reversedPaths = new ArrayList<>(paths);
+        Collections.reverse(reversedPaths);
+        new PathVisualization(reversedPaths);
     }
 }

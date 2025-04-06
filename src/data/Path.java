@@ -42,6 +42,14 @@ public class Path {
     }
 
     @Override
+    public String toString() {
+
+        List<String> edgeStrings = this.edges.stream().map(Edge::toString).toList();
+
+        return String.join(" -> ", edgeStrings);
+    }
+
+    @Override
     public boolean equals(Object object) {
 
         if (object instanceof Path path) {
