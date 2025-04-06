@@ -21,7 +21,7 @@ public class PathCalculator {
         });
 
         linkLinearPaths(edges);
-        new Edge(227.0,882.0);
+        new Edge(227.0, 882.0);
 
         return edges.stream()
                 .map(Edge::findLongestPathFromHere)
@@ -36,20 +36,24 @@ public class PathCalculator {
         edges.forEach(edge -> {
 
             List<Edge> sameEdges = edges.stream()
-                    .filter(edge::equals)
+                    .filter(e -> e.getX().equals(edge.getX()) && e.getY().equals(edge.getY()))
                     .toList();
 
-            if (sameEdges.size() == 2 && !edgesToBeRemoved.contains(edge)) {
-
-                sameEdges.get(0).linkEdges(sameEdges.get(1).getLinkedEdges());
-                sameEdges.get(1).getLinkedEdges().forEach(linkedEdge -> {
-                    linkedEdge.linkEdge(sameEdges.get(0));
-                    linkedEdge.unlinkEdges(List.of(sameEdges.get(1)));
-                });
+            if (sameEdges.size() == 2 && edgesToBeRemoved.stream().noneMatch(e -> e.toString().equals(edge.toString()))) {
+                mergeEdges(sameEdges.get(0), sameEdges.get(1));
                 edgesToBeRemoved.add(sameEdges.get(1));
             }
         });
 
         edgesToBeRemoved.forEach(edges::remove);
+    }
+
+    private static void mergeEdges(Edge remainingEdge, Edge obsoleteEdge) {
+
+        remainingEdge.linkEdges(obsoleteEdge.getLinkedEdges());
+        obsoleteEdge.getLinkedEdges().forEach(linkedEdge -> {
+            linkedEdge.linkEdge(remainingEdge);
+            linkedEdge.unlinkEdges(List.of(obsoleteEdge));
+        });
     }
 }

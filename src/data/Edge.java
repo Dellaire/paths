@@ -75,16 +75,6 @@ public class Edge {
     }
 
     @Override
-    public boolean equals(Object object) {
-
-        if (object instanceof Edge edge) {
-            return this.x.equals(edge.getX()) && this.y.equals(edge.getY());
-        }
-
-        return false;
-    }
-
-    @Override
     public String toString() {
         return this.x.toString() + "," + this.y.toString();
     }
