@@ -64,6 +64,6 @@ public class Path {
     @Override
     public int hashCode() {
 
-        return Objects.hash(new HashSet<>(this.edges));
+        return new HashSet<>(this.edges).hashCode();
     }
 }

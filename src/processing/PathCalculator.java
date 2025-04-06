@@ -20,8 +20,7 @@ public class PathCalculator {
             edges.add(line.edge2());
         });
 
-        linkLinearPaths(edges);
-        new Edge(227.0, 882.0);
+        mergeLinearPaths(edges);
 
         return edges.stream()
                 .map(Edge::findLongestPathFromHere)
@@ -30,7 +29,7 @@ public class PathCalculator {
                 .toList();
     }
 
-    private static void linkLinearPaths(List<Edge> edges) {
+    private static void mergeLinearPaths(List<Edge> edges) {
 
         List<Edge> edgesToBeRemoved = new ArrayList<>();
         edges.forEach(edge -> {

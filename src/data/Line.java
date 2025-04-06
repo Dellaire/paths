@@ -22,6 +22,11 @@ public record Line(Edge edge1, Edge edge2) {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.edge1.equals(this.edge2));
+
+        int hash = 7;
+        hash = 31 * hash + this.edge1.hashCode();
+        hash = 31 * hash + this.edge2.hashCode();
+
+        return hash;
     }
 }
