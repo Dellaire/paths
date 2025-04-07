@@ -20,9 +20,9 @@ public class PathCalculator {
             edges.add(line.edge2());
         });
 
-        mergeLinearPaths(edges);
+        List<Edge> edgesOfMergedLines = mergeLinearPaths(edges);
 
-        List<Path> pathsAndSubPaths = new ArrayList<>(edges.stream()
+        List<Path> pathsAndSubPaths = new ArrayList<>(edgesOfMergedLines.stream()
                 .map(Edge::findLongestPathFromHere)
                 .sorted(Comparator.comparing(Path::getLength).reversed())
                 .distinct()
@@ -33,7 +33,7 @@ public class PathCalculator {
         return paths;
     }
 
-    private static void mergeLinearPaths(List<Edge> edges) {
+    private static List<Edge> mergeLinearPaths(List<Edge> edges) {
 
         List<Edge> edgesToBeRemoved = new ArrayList<>();
         edges.forEach(edge -> {
@@ -48,7 +48,10 @@ public class PathCalculator {
             }
         });
 
-        edgesToBeRemoved.forEach(edges::remove);
+        List<Edge> edgesOfMergedLines = new ArrayList<>(edges);
+        edgesToBeRemoved.forEach(edgesOfMergedLines::remove);
+
+        return edgesOfMergedLines;
     }
 
     private static void mergeEdges(Edge remainingEdge, Edge obsoleteEdge) {
