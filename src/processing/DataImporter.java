@@ -27,13 +27,12 @@ public class DataImporter {
         List<String[]> edgeStrings = lineStrings.stream()
                 .map(lineString -> lineString.split(" "))
                 .toList();
-        List<Line> lines = edgeStrings.stream()
+
+        return edgeStrings.stream()
                 .map(edgeString -> new Line(
                         new Edge(parseDouble(edgeString[0]), parseDouble(edgeString[1])),
                         new Edge(parseDouble(edgeString[2]), parseDouble(edgeString[3]))
                 ))
                 .toList();
-
-        return lines;
     }
 }

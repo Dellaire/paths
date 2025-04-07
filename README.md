@@ -23,3 +23,15 @@ Example:
 970 362 742 580
 ```
 A more complex example is placed in the directory `input` of this repository.
+
+## Output
+
+The console output looks like this:
+```
+Path with length <legnthOfLongestPath>: <edge1> -> <edge2> -> ...
+Path with length <legnthOf2ndLongestPath>: ...
+...
+```
+Additionally, UI window will pop up when the console output is finished, visualizing the results in a 2D coordinate system.
+
+> <b>Hint:</b> A line can be part of multiple paths, a path can consist of one or multiple smaller paths and every line is a (smallest possible) path as well. Given the path `edge1 -> edge2 -> edge3`, the result list will also contain the paths `edge1 -> edge2` and `edge2 -> edge3`.
