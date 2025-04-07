@@ -34,4 +34,4 @@ Path with length <legnthOf2ndLongestPath>: ...
 ```
 Additionally, UI window will pop up when the console output is finished, visualizing the results in a 2D coordinate system.
 
-> <b>Hint:</b> A line can be part of multiple paths, a path can consist of one or multiple smaller paths and every line is a (smallest possible) path as well. Given the path `edge1 -> edge2 -> edge3`, the result list will also contain the paths `edge1 -> edge2` and `edge2 -> edge3`.
+> <b>Note:</b> Although, a path is an ordered list of edges, the reversed list, meaning reversing the order of edges visited when traveling along the path, is considered equal to it, since it covers the same distance. Therefore, `edge1 -> edge2 -> edge3` is equal to `edge3 -> edge2 -> edge1`.

@@ -69,7 +69,7 @@ public class Edge {
                         }
                 ).toList());
 
-        paths.sort(Comparator.comparing(Path::getLength));
+        paths.sort(Comparator.comparing(Path::getLength).reversed());
 
         return paths.get(0);
     }
