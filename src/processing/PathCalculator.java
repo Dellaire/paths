@@ -4,9 +4,7 @@ import data.Vertex;
 import data.Line;
 import data.Path;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class PathCalculator {
 
@@ -67,11 +65,13 @@ public class PathCalculator {
 
         List<Path> paths = new ArrayList<>(pathsAndSubPaths);
 
-        int i = 1;
+        Set<Vertex> presentVertices = new HashSet<>();
+        int i = 0;
         while (i < paths.size()) {
-            if (paths.get(i - 1).getVertices().contains(paths.get(i).getVertices().get(0))) {
+            if (presentVertices.containsAll(paths.get(i).getVertices())) {
                 paths.remove(paths.get(i));
             } else {
+                presentVertices.addAll(paths.get(i).getVertices());
                 i++;
             }
         }
