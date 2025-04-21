@@ -1,6 +1,6 @@
 package ui;
 
-import data.Edge;
+import data.Vertex;
 import data.Line;
 import data.Path;
 
@@ -54,23 +54,23 @@ public class PathVisualization extends JFrame {
 
     private void drawLine(Line line) {
 
-        this.graphics.drawLine(line.edge1().getX().intValue(), line.edge1().getY().intValue(),
-                line.edge2().getX().intValue(), line.edge2().getY().intValue());
+        this.graphics.drawLine(line.vertex1().getX().intValue(), line.vertex1().getY().intValue(),
+                line.vertex2().getX().intValue(), line.vertex2().getY().intValue());
 
-        this.graphics.fillOval(line.edge1().getX().intValue() - CIRCLE_OFFSET,
-                line.edge1().getY().intValue() - CIRCLE_OFFSET, CIRCLE_DIAMETER, CIRCLE_DIAMETER);
-        this.graphics.fillOval(line.edge2().getX().intValue() - CIRCLE_OFFSET,
-                line.edge2().getY().intValue() - CIRCLE_OFFSET, CIRCLE_DIAMETER, CIRCLE_DIAMETER);
+        this.graphics.fillOval(line.vertex1().getX().intValue() - CIRCLE_OFFSET,
+                line.vertex1().getY().intValue() - CIRCLE_OFFSET, CIRCLE_DIAMETER, CIRCLE_DIAMETER);
+        this.graphics.fillOval(line.vertex2().getX().intValue() - CIRCLE_OFFSET,
+                line.vertex2().getY().intValue() - CIRCLE_OFFSET, CIRCLE_DIAMETER, CIRCLE_DIAMETER);
     }
 
     private void drawLabels() {
 
-        Set<Edge> edges = this.paths.keySet().stream()
-                .flatMap(path -> path.getEdges().stream()).collect(Collectors.toSet());
+        Set<Vertex> vertices = this.paths.keySet().stream()
+                .flatMap(path -> path.getVertices().stream()).collect(Collectors.toSet());
 
         this.graphics.setColor(Color.BLACK);
-        edges.forEach(edge ->
-                this.graphics.drawString("%s,%s".formatted(edge.getX().intValue(), edge.getY().intValue()),
-                        edge.getX().intValue() + LABEL_OFFSET, edge.getY().intValue()));
+        vertices.forEach(vertex ->
+                this.graphics.drawString("%s,%s".formatted(vertex.getX().intValue(), vertex.getY().intValue()),
+                        vertex.getX().intValue() + LABEL_OFFSET, vertex.getY().intValue()));
     }
 }

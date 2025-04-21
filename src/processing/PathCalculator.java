@@ -1,6 +1,6 @@
 package processing;
 
-import data.Edge;
+import data.Vertex;
 import data.Line;
 import data.Path;
 
@@ -12,18 +12,18 @@ public class PathCalculator {
 
     public static List<Path> calculatePaths(List<Line> lines) {
 
-        List<Edge> edges = new ArrayList<>();
+        List<Vertex> vertices = new ArrayList<>();
         lines.forEach(line -> {
-            line.edge1().linkEdge(line.edge2());
-            edges.add(line.edge1());
-            line.edge2().linkEdge(line.edge1());
-            edges.add(line.edge2());
+            line.vertex1().linkVertex(line.vertex2());
+            vertices.add(line.vertex1());
+            line.vertex2().linkVertex(line.vertex1());
+            vertices.add(line.vertex2());
         });
 
-        List<Edge> edgesOfMergedLines = mergeLinearPaths(edges);
+        List<Vertex> verticesOfMergedLines = mergeLinearPaths(vertices);
 
-        List<Path> pathsAndSubPaths = new ArrayList<>(edgesOfMergedLines.stream()
-                .map(Edge::findLongestPathFromHere)
+        List<Path> pathsAndSubPaths = new ArrayList<>(verticesOfMergedLines.stream()
+                .map(Vertex::findLongestPathFromHere)
                 .sorted(Comparator.comparing(Path::getLength).reversed())
                 .distinct()
                 .toList());
@@ -33,33 +33,33 @@ public class PathCalculator {
         return paths;
     }
 
-    private static List<Edge> mergeLinearPaths(List<Edge> edges) {
+    private static List<Vertex> mergeLinearPaths(List<Vertex> vertices) {
 
-        List<Edge> edgesToBeRemoved = new ArrayList<>();
-        edges.forEach(edge -> {
+        List<Vertex> verticesToBeRemoved = new ArrayList<>();
+        vertices.forEach(vertex -> {
 
-            List<Edge> sameEdges = edges.stream()
-                    .filter(e -> e.getX().equals(edge.getX()) && e.getY().equals(edge.getY()))
+            List<Vertex> sameVertices = vertices.stream()
+                    .filter(e -> e.getX().equals(vertex.getX()) && e.getY().equals(vertex.getY()))
                     .toList();
 
-            if (sameEdges.size() == 2 && edgesToBeRemoved.stream().noneMatch(e -> e.toString().equals(edge.toString()))) {
-                mergeEdges(sameEdges.get(0), sameEdges.get(1));
-                edgesToBeRemoved.add(sameEdges.get(1));
+            if (sameVertices.size() == 2 && verticesToBeRemoved.stream().noneMatch(e -> e.toString().equals(vertex.toString()))) {
+                mergeVertices(sameVertices.get(0), sameVertices.get(1));
+                verticesToBeRemoved.add(sameVertices.get(1));
             }
         });
 
-        List<Edge> edgesOfMergedLines = new ArrayList<>(edges);
-        edgesToBeRemoved.forEach(edgesOfMergedLines::remove);
+        List<Vertex> verticesOfMergedLines = new ArrayList<>(vertices);
+        verticesToBeRemoved.forEach(verticesOfMergedLines::remove);
 
-        return edgesOfMergedLines;
+        return verticesOfMergedLines;
     }
 
-    private static void mergeEdges(Edge remainingEdge, Edge obsoleteEdge) {
+    private static void mergeVertices(Vertex remainingVertex, Vertex obsoleteVertex) {
 
-        remainingEdge.linkEdges(obsoleteEdge.getLinkedEdges());
-        obsoleteEdge.getLinkedEdges().forEach(linkedEdge -> {
-            linkedEdge.linkEdge(remainingEdge);
-            linkedEdge.unlinkEdges(List.of(obsoleteEdge));
+        remainingVertex.linkVertices(obsoleteVertex.getLinkedVertices());
+        obsoleteVertex.getLinkedVertices().forEach(linkedVertex -> {
+            linkedVertex.linkVertex(remainingVertex);
+            linkedVertex.unlinkVertices(List.of(obsoleteVertex));
         });
     }
 
@@ -69,7 +69,7 @@ public class PathCalculator {
 
         int i = 1;
         while (i < paths.size()) {
-            if (paths.get(i - 1).getEdges().contains(paths.get(i).getEdges().get(0))) {
+            if (paths.get(i - 1).getVertices().contains(paths.get(i).getVertices().get(0))) {
                 paths.remove(paths.get(i));
             } else {
                 i++;

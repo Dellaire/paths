@@ -3,30 +3,29 @@ package data;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 
 public class Path {
 
-    private final List<Edge> edges = new ArrayList<>();
+    private final List<Vertex> vertices = new ArrayList<>();
     private Double length = 0.0;
 
-    public List<Edge> getEdges() {
-        return edges;
+    public List<Vertex> getVertices() {
+        return vertices;
     }
 
     public Double getLength() {
         return length;
     }
 
-    public Path addEdge(Edge edge) {
+    public Path addVertex(Vertex vertex) {
 
-        this.addEdge(edge, 0.0);
+        this.addVertex(vertex, 0.0);
         return this;
     }
 
-    public Path addEdge(Edge edge, Double length) {
+    public Path addVertex(Vertex vertex, Double length) {
 
-        this.edges.add(0, edge);
+        this.vertices.add(0, vertex);
         this.length += length;
         return this;
     }
@@ -34,8 +33,8 @@ public class Path {
     public List<Line> getLines() {
 
         List<Line> lines = new ArrayList<>();
-        for (int i = 0; i < edges.size() - 1; i++) {
-            lines.add(new Line(this.edges.get(i), this.edges.get(i + 1)));
+        for (int i = 0; i < vertices.size() - 1; i++) {
+            lines.add(new Line(this.vertices.get(i), this.vertices.get(i + 1)));
         }
 
         return lines;
@@ -44,9 +43,9 @@ public class Path {
     @Override
     public String toString() {
 
-        List<String> edgeStrings = this.edges.stream().map(Edge::toString).toList();
+        List<String> vertexStrings = this.vertices.stream().map(Vertex::toString).toList();
 
-        return String.join(" -> ", edgeStrings);
+        return String.join(" -> ", vertexStrings);
     }
 
     @Override
@@ -54,8 +53,8 @@ public class Path {
 
         if (object instanceof Path path) {
 
-            return this.edges.size() == path.getEdges().size()
-                    && this.edges.containsAll(path.getEdges());
+            return this.vertices.size() == path.getVertices().size()
+                    && this.vertices.containsAll(path.getVertices());
         }
 
         return false;
@@ -64,6 +63,6 @@ public class Path {
     @Override
     public int hashCode() {
 
-        return new HashSet<>(this.edges).hashCode();
+        return new HashSet<>(this.vertices).hashCode();
     }
 }

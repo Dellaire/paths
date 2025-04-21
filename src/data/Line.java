@@ -1,15 +1,13 @@
 package data;
 
-import java.util.Objects;
-
-public record Line(Edge edge1, Edge edge2) {
+public record Line(Vertex vertex1, Vertex vertex2) {
 
     @Override
     public boolean equals(Object object) {
 
         if (object instanceof Line line) {
-            return (this.edge1.equals(line.edge1()) && this.edge2.equals(line.edge2()))
-                    || (this.edge1.equals(line.edge2()) && this.edge2.equals(line.edge1()));
+            return (this.vertex1.equals(line.vertex1()) && this.vertex2.equals(line.vertex2()))
+                    || (this.vertex1.equals(line.vertex2()) && this.vertex2.equals(line.vertex1()));
         }
 
         return false;
@@ -17,15 +15,15 @@ public record Line(Edge edge1, Edge edge2) {
 
     @Override
     public String toString() {
-        return this.edge1 + " -> " + this.edge2;
+        return this.vertex1 + " -> " + this.vertex2;
     }
 
     @Override
     public int hashCode() {
 
         int hash = 7;
-        hash = 31 * hash + this.edge1.hashCode();
-        hash = 31 * hash + this.edge2.hashCode();
+        hash = 31 * hash + this.vertex1.hashCode();
+        hash = 31 * hash + this.vertex2.hashCode();
 
         return hash;
     }

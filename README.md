@@ -15,7 +15,7 @@ The input format is as follows:
 <x11> <y11> <x12> <y12>
 ...
 ```
-Every line in the input file represents a geometrical line, every geometrical line consists of a pair of edges (`<x11> <y11>`), who define start and end.
+Every line in the input file represents a geometrical line, every geometrical line consists of a pair of vertices (`<x11> <y11>`), who define start and end.
 
 Example:
 ```
@@ -28,11 +28,11 @@ A more complex example is placed in the directory `input` of this repository.
 
 The console output looks like this:
 ```
-Path with length <legnthOfLongestPath>: <edge1> -> <edge2> -> ...
+Path with length <legnthOfLongestPath>: <vertex1> -> <vertex2> -> ...
 Path with length <legnthOf2ndLongestPath>: ...
 ...
 ```
 
 Additionally, a UI window will pop up when the console output is finished, visualizing the results in a 2D coordinate system.
 
-> <b>Note:</b> Although, a path is an ordered list of edges, the reversed list, meaning reversing the order of edges visited when traveling along the path, is considered equal to it, since it covers the same distance. Therefore, `edge1 -> edge2 -> edge3` is equal to `edge3 -> edge2 -> edge1`.
+> <b>Note:</b> Although, a path is an ordered list of vertices, the reversed list, meaning reversing the order of vertices visited when traveling along the path, is considered equal to it, since it covers the same distance. Therefore, `vertex1 -> vertex2 -> vertex3` is equal to `vertex3 -> vertex2 -> vertex1`.
